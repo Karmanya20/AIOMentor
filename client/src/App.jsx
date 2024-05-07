@@ -4,10 +4,13 @@ import About from "./pages/About";
 import Explore from "./pages/Explore";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <Router>
+      {/* Header */}
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
