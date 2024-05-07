@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,6 +16,20 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    phone: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    goal: {
+      type: String,
+      default: "",
+    },
+    accountType: {
+      type: String,
+      required: true,
+      enum: ["mentor", "mentee"],
     },
   },
   { timestamps: true }
