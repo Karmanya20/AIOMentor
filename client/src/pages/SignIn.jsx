@@ -59,7 +59,7 @@ const SignIn = () => {
       type="submit"
       className="bg-slate-700 p-3 rounded-lg text-white uppercase hover:opacity-90 disabled:opacity-70"
     >
-      Sign In
+      Sign Inw
     </button>
   </form>
 
