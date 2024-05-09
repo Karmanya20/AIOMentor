@@ -26,7 +26,8 @@ export const signUpUser = async (req, res, next) => {
 };
 
 export const signInUser = async (req, res, next) => {
-  const { email, password } = req.body;
+  const data = req.body;
+  const { email, password } = data;
   if (!email || !password) {
     next(errorHandler(400, "All fields are required"));
   }
@@ -36,14 +37,20 @@ export const signInUser = async (req, res, next) => {
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandler(401, "Invalid Credentials"));
 
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    const accessToken = jwt.sign({ data : data}, process.env.JWT_SECRET);
+    const refreshToken = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
 
     const { password: hashedPassword, ...rest } = validUser._doc;
+
+    //Save the refresh token in the database
+    validUser.refreshToken = refreshToken;
+    await validUser.save({validateBeforeSave: true});
 
     const expiryDate = new Date(Date.now() + 3600000); // 1 Hour
 
     res
-      .cookie("access_token", token, { httpOnly: true, expires: expiryDate })
+      .cookie("access_token", accessToken, { httpOnly: true, expires: expiryDate })
+      .cookie("refresh_token", refreshToken, { httpOnly: true, expires: expiryDate })
       .status(200)
       .json(rest);
   } catch (error) {
