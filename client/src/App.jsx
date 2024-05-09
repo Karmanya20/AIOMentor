@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Explore from "./pages/Explore";
+import ExploreMentors from "./pages/ExploreMentors";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Header from "./components/Header";
@@ -15,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/explore" element={<Explore />} />
+        <Route path="/explore" element={<ExploreMentors />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard/>} />
