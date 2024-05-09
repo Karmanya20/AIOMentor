@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 
@@ -18,12 +19,24 @@ mongoose
 const app = express();
 app.use(express.json());
 
-app.listen(3000, () => {
-  console.log("Server listening on port 3000!");
-});
+app.use(cors({
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200
+}));
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+app.listen(process.env.PORT, () => {
+  console.log(`Alpha is online on PORT:${process.env.PORT}!`);
+});
+
+app.get('/', (req, res) => {
+  res.send(
+      "<h1>Hello World!</h1>" 
+      // or whatever your favorite hello world is!
+  )
+}); 
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
