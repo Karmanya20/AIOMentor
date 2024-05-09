@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
@@ -31,6 +30,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ["mentor", "mentee"],
     },
+    refreshToken : {
+      type: String,
+    }
   },
   { timestamps: true }
 );

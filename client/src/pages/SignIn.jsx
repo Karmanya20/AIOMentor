@@ -36,7 +36,7 @@ const SignIn = () => {
       }
 
       if (res.ok) {
-        navigate("/home");
+        navigate("/dashboard");
       }
     } catch (error) {
       setError(error.message);
