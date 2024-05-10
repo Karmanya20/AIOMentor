@@ -54,7 +54,7 @@ const SignUp = () => {
           placeholder="Username"
           id="username"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
@@ -63,7 +63,7 @@ const SignUp = () => {
           placeholder="Email"
           id="email"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
@@ -72,7 +72,7 @@ const SignUp = () => {
           placeholder="Phone No."
           id="phone"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
@@ -81,14 +81,14 @@ const SignUp = () => {
           placeholder="Password"
           id="password"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
         <textarea
           id="goal"
           placeholder="Goal"
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         ></textarea>
 

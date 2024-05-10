@@ -18,7 +18,7 @@ const Header = () => {
             <li className="text-sm sm:text-lg hover:text-blue-400">Explore Mentor</li>
           </Link>
         </ul>
-        <Link className="w-[3.8rem] sm:w-[4.8rem] h-10 border-2 border-black rounded-sm flex justify-center items-center text-sm sm:text-lg hover:bg-gray-950 hover:text-gray-50 transition-all" to="/sign-in">
+        <Link className="w-[3.8rem] sm:w-[4.8rem] h-10 border-2 border-black rounded-sm flex justify-center items-center text-sm sm:text-lg hover:bg-slate-700 hover:text-gray-50 hover:border-slate-700 transition-all" to="/sign-in">
           <p>Sign In</p>
         </Link>
       </div>
