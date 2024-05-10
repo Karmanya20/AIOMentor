@@ -54,7 +54,7 @@ const SignIn = () => {
           placeholder="Email"
           id="email"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
@@ -63,7 +63,7 @@ const SignIn = () => {
           placeholder="Password"
           id="password"
           required
-          className="bg-slate-100 p-3 rounded-lg"
+          className="bg-slate-100 p-3 rounded-lg focus:outline-none"
           onChange={handleChange}
         />
 
