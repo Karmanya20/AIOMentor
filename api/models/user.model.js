@@ -25,12 +25,35 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    gender:{
+      type: String,
+      default: "",
+    },
+    dateOfBirth:{
+      type: String,
+      default: "",
+    },
+    location:{
+      type: String,
+      default: "West Bengal"
+    },
+    industry:{
+      type: String,
+      default: "",
+    },
+    area_of_expertise:{
+      type: String,
+      default: "",
+    },
     accountType: {
       type: String,
       required: true,
       enum: ["mentor", "mentee"],
     },
     refreshToken : {
+      type: String,
+    },
+    image: {
       type: String,
     }
   },
