@@ -3,6 +3,14 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
+const generateAccessToken = (data) => {
+  return jwt.sign({ data : data}, process.env.JWT_SECRET)
+}
+
+const generateRefreshToken = (id) => {
+  return jwt.sign({ id: id }, process.env.JWT_SECRET)
+}
+
 export const signUpUser = async (req, res, next) => {
   const { username, email, password, accountType, phone, goal } = req.body;
   if (!username || !email || !password || !accountType || !phone) {
@@ -17,9 +25,18 @@ export const signUpUser = async (req, res, next) => {
     goal,
     accountType,
   });
+  const accessToken = generateAccessToken(newUser);
+  const refreshToken = generateRefreshToken(newUser._id.toString());
+
+  const expiryDate = new Date(Date.now() + 3600000); 
+
   try {
     await newUser.save();
-    res.status(201).json({ message: "User created successfully" });
+    res
+    .cookie("access_token", accessToken, { httpOnly: true, expires: expiryDate })
+    .cookie("refresh_token", refreshToken, { httpOnly: true, expires: expiryDate })
+    .status(200)
+    .json({ message: "User created successfully" });
   } catch (error) {
     next(error);
   }
@@ -36,9 +53,9 @@ export const signInUser = async (req, res, next) => {
     if (!validUser) return next(errorHandler(404, "User not found"));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandler(401, "Invalid Credentials"));
-
-    const accessToken = jwt.sign({ data : data}, process.env.JWT_SECRET);
-    const refreshToken = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    
+    const accessToken = generateAccessToken(data);
+    const refreshToken = generateRefreshToken(validUser._id.toString());
 
     const { password: hashedPassword, ...rest } = validUser._doc;
 

@@ -1,9 +1,8 @@
-
 const User = require("../models/user.model");
 const Profile = require("../models/profile.model");
 exports.updateProfile = async (req, res) => {
     try {
-      const { dateOfBirth = "", about = "", contactNumber } = req.body;
+      const { dateOfBirth = "", goal = "", contactNumber } = req.body;
       const id = req.user.id;
   
       // Find the profile by id
