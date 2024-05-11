@@ -32,6 +32,18 @@ const userSchema = new mongoose.Schema(
     },
     refreshToken : {
       type: String,
+    },
+    additionalDetails: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Profile",
+    },
+    resetPasswordExpires: {
+        type: Date,
+    },
+    image: {
+        type: String,
+        required: true,
     }
   },
   { timestamps: true }
