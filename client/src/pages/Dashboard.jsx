@@ -1,12 +1,12 @@
 import React from 'react'
+import { Sidebar } from '../components/Sidebar'
 
 const Dashboard = () => {
   return (
     <div>
-  
-      <span class="mx-2 text-2xl font-semibold text-sky-400">
+      <span className="mx-2 text-2xl font-semibold text-sky-400">
         Dashboard</span>
-      
+      <Sidebar/>  
     </div>
   )
 }
