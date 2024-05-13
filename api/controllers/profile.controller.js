@@ -5,9 +5,6 @@ exports.updateProfile = async (req, res) => {
       const { dateOfBirth = "", goal = "", phone ="",location="",industry="",area_of_expertise=""} = req.body;
       const id = req.user.id;
      
-  
-     
-  
       // Update the profile fields
       User.dateOfBirth = dateOfBirth;
       User.goal = goal;
