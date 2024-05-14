@@ -55,7 +55,10 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-    }
+    },
+     token: {
+			type: String,
+		}
   },
   { timestamps: true }
 );
