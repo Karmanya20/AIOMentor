@@ -28,15 +28,15 @@ export const signUpUser = async (req, res, next) => {
   const accessToken = generateAccessToken(newUser);
   const refreshToken = generateRefreshToken(newUser._id.toString());
 
-  const expiryDate = new Date(Date.now() + 3600000); 
-
   try {
     await newUser.save();
     res
-    .cookie("access_token", accessToken, { httpOnly: true, expires: expiryDate })
-    .cookie("refresh_token", refreshToken, { httpOnly: true, expires: expiryDate })
     .status(200)
-    .json({ message: "User created successfully" });
+    .json({
+      success: true,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
   } catch (error) {
     next(error);
   }
@@ -63,13 +63,13 @@ export const signInUser = async (req, res, next) => {
     validUser.refreshToken = refreshToken;
     await validUser.save({validateBeforeSave: true});
 
-    const expiryDate = new Date(Date.now() + 3600000); // 1 Hour
-
     res
-      .cookie("access_token", accessToken, { httpOnly: true, expires: expiryDate })
-      .cookie("refresh_token", refreshToken, { httpOnly: true, expires: expiryDate })
       .status(200)
-      .json(rest);
+      .json({
+        success: true,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
   } catch (error) {
     next(error);
   }

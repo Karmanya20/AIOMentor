@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const SignUp = () => {
+  const [cookies, setCookie] = useCookies();
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,15 +30,26 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      const response = await res.json();
       setLoading(false);
 
-      if (data.success === false) {
-        return setError(data.message);
+      if (response.success === false) {
+        return setError(response.data.message);
       }
-
-      if (res.ok) {
-        navigate("/dashboard");
+      else {
+        console.log(response.accessToken);
+        console.log(response.refreshToken);
+        setCookie("access_token", response.accessToken, {
+          path: "/",
+          maxAge: 3600, // Expires after 1hr
+          sameSite: "strict"
+        });
+        setCookie("refresh_token", response.refreshToken, {
+          path: "/",
+          maxAge: 7200, // Expires after 2hr
+          sameSite: "strict"
+        });
+        navigate("/dashboard/main");
       }
     } catch (error) {
       setError(error.message);
