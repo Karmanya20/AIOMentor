@@ -4,6 +4,13 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
+import profileRoutes from "./routes/profile.routes.js";
+
+import { cloudinaryConnect } from "./config/cloudinary.js";
+import fileUpload from "express-fileupload";
+
+// Other code...
+
 
 dotenv.config();
 
@@ -19,13 +26,30 @@ mongoose
 const app = express();
 app.use(express.json());
 
+//cors
+
 app.use(cors({
   origin: 'http://localhost:5173',
   optionsSuccessStatus: 200
 }));
 
+
+// fileUploader
+app.use(
+  fileUpload({
+      useTempFiles:true,
+      tempFileDir:"/tmp",
+  })
+)
+
+//cloudinary connect
+cloudinaryConnect();
+
+//route mount
+
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Alpha is online on PORT:${process.env.PORT}!`);
