@@ -1,84 +1,81 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const User = require("../models/user.model");
+import jwt from "jsonwebtoken";
+import { config as dotenvConfig } from "dotenv";
+import User from "../models/user.model.js"; 
 
-//auth
-exports.auth = async (req, res, next) => {
-    try{
-        //extract token
-        const token = req.cookies.token 
-                        || req.body.token 
-                        || req.header("Authorization").replace("Bearer ", "");
+dotenvConfig();
 
-        //if token missing, then return response
-        if(!token) {
+// Auth Middleware
+export const auth = async (req, res, next) => {
+    try {
+        // Extract token
+        const token = req.cookies.token || req.body.token || req.headers.authorization.replace("Bearer ", "");
+
+        // If token is missing, return response
+        if (!token) {
             return res.status(401).json({
-                success:false,
-                message:'TOken is missing',
+                success: false,
+                message: 'Token is missing',
             });
         }
 
-        //verify the token
-        try{
-            const decode =  jwt.verify(token, process.env.JWT_SECRET);
+        // Verify the token
+        try {
+            const decode = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decode);
             req.user = decode;
-        }
-        catch(err) {
-            //verification - issue
+        } catch (err) {
+            // Verification issue
             return res.status(401).json({
-                success:false,
-                message:'token is invalid',
+                success: false,
+                message: 'Token is invalid',
             });
         }
         next();
-    }
-    catch(error) {  
+    } catch (error) {
         return res.status(401).json({
-            success:false,
-            message:'Something went wrong while validating the token',
+            success: false,
+            message: 'Something went wrong while validating the token',
         });
     }
-}
+};
 
-//ismentee
-exports.isMentee = async (req, res, next) => {
- try{
-        if(req.user.accountType !== "mentee") {
+// Middleware to check if user is a Mentee
+export const isMentee = async (req, res, next) => {
+    try {
+        if (req.user.accountType!== "mentee") {
             return res.status(401).json({
-                success:false,
-                message:'This is a protected route for mentee only',
+                success: false,
+                message: 'This is a protected route for mentee only',
             });
         }
         next();
- }
- catch(error) {
-    return res.status(500).json({
-        success:false,
-        message:'User role cannot be verified, please try again'
-    })
- }
-}
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'User role cannot be verified, please try again'
+        });
+    }
+};
+
+// Middleware to check if user is a Mentor
+export const isMentor = async (req, res, next) => {
+    try {
+        if (req.user.accountType !== "Mentor") {
+            return res.status(401).json({
+                success: false,
+                message: 'This is a protected route for Mentor only',
+            });
+        }
+        next();
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'User role cannot be verified, please try again'
+        });
+    }
+};
 
 
-//isMentor
-exports.isMentor = async (req, res, next) => {
-    try{
-           if(req.user.accountType !== "Mentor") {
-               return res.status(401).json({
-                   success:false,
-                   message:'This is a protected route for Mentor only',
-               });
-           }
-           next();
-    }
-    catch(error) {
-       return res.status(500).json({
-           success:false,
-           message:'User role cannot be verified, please try again'
-       })
-    }
-   }
 /*
 
 //isAdmin
