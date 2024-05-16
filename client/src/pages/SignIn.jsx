@@ -32,11 +32,9 @@ const SignIn = () => {
       const response = await res.json();
       setLoading(false);
       if (response.success === false) {
-        return setError(response.data.message);
+        return setError(response.message);
       }
       else {
-        console.log(response.accessToken);
-        console.log(response.refreshToken);
         setCookie("access_token", response.accessToken, {
           path: "/",
           maxAge: 3600, // Expires after 1hr

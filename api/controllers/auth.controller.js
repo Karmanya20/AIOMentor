@@ -36,6 +36,7 @@ export const signUpUser = async (req, res, next) => {
       success: true,
       accessToken: accessToken,
       refreshToken: refreshToken,
+      message: "User created successfully"
     });
   } catch (error) {
     next(error);
@@ -69,6 +70,7 @@ export const signInUser = async (req, res, next) => {
         success: true,
         accessToken: accessToken,
         refreshToken: refreshToken,
+        message: "User loggedIn successfully"
       });
   } catch (error) {
     next(error);

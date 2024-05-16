@@ -34,7 +34,7 @@ const SignUp = () => {
       setLoading(false);
 
       if (response.success === false) {
-        return setError(response.data.message);
+        return setError(response.message);
       }
       else {
         console.log(response.accessToken);

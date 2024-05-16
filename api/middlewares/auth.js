@@ -8,7 +8,9 @@ dotenvConfig();
 export const auth = async (req, res, next) => {
     try {
         // Extract token
-        const token = req.cookies.token || req.body.token || req.headers.authorization.replace("Bearer ", "");
+        const token = req.body.access_token;
+
+        console.log(token);
 
         // If token is missing, return response
         if (!token) {
@@ -21,7 +23,6 @@ export const auth = async (req, res, next) => {
         // Verify the token
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
-            console.log(decode);
             req.user = decode;
         } catch (err) {
             // Verification issue

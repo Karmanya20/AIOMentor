@@ -81,8 +81,9 @@ export const updateDisplayPicture = async (req, res) => {
 
 export const getAllUserDetails = async (req, res) => {
     try {
-        const id = req.user.id;
-        const userDetails = await User.findById(id);
+        console.log(req.user.data.email);
+        const email = req.user.data.email;
+        const userDetails = await User.findOne({email : email});
         console.log(userDetails);
         return res.status(200).json({
             success: true,
